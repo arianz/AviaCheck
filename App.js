@@ -1,20 +1,42 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { Component } from "react";
+import { StatusBar } from "react-native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { NavigationContainer } from "@react-navigation/native";
+import mainMenu from "./screens/mainMenu";
+const Stack = createNativeStackNavigator();
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+class App extends Component
+{
+    
+    render ()
+    {
+      const headerStyle = {
+        headerTitleStyle: { color: "white" },
+        headerStyle: {
+          backgroundColor: "#193F8A",
+        },
+        headerTintColor: "#BFE7F6",
+        };
+      return(
+      <NavigationContainer>
+      <StatusBar style="auto" backgroundColor="#193F8A" />
+      <Stack.Navigator>
+        <Stack.Screen
+          name="mainMenu"
+          component={mainMenu}
+          options={{
+            title: "AVIACHECK",
+            ...headerStyle,
+          }}
+        />
+        {/* tambahkan stack screen buat detail.js */}
+       
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+      </Stack.Navigator>
+    </NavigationContainer>
+      );
+    }
+};
+// 
+// };
+export default App;
