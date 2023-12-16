@@ -31,7 +31,10 @@ class App extends Component
             ...headerStyle,
           }}
         />
+
         <Stack.Screen name="Detail" component={DetailScreen}/>
+        {/* tambahkan stack screen buat detail.js */}
+       
       </Stack.Navigator>
     </NavigationContainer>
       );

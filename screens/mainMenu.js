@@ -14,6 +14,7 @@ import {
 import { NativeBaseProvider, } from "native-base";
 import { CheckBox } from 'react-native-elements';
 import { useNavigation } from "@react-navigation/native"; // Impor useNavigation
+import { NativeBaseProvider } from "native-base";
 // cheklist berisi semua data datanya ditaroh disini. atau kalo mau misahin silakan
 const checklist = [
     {
@@ -321,21 +322,7 @@ const mainMenu = () => {
                 </View>
             </TouchableOpacity>
         );
-    };
-    
-    return (
-        <NativeBaseProvider>
-            <View style={styles.container}>
-                <FlatList
-                    data={checklist}
-                    keyExtractor={(item) => item.bab}
-                    renderItem={renderItem}
-                    ItemSeparatorComponent={() => <View style={styles.separator} />}
-                />
-            </View>
-        </NativeBaseProvider>
-    );
-};
+    };       
 
 const styles = StyleSheet.create({
     container: {
@@ -348,6 +335,10 @@ const styles = StyleSheet.create({
         borderColor: "#34495E",
         borderWidth: 2,
         borderRadius: 10,
+        borderBottomWidth: 1,
+        backgroundColor: "#193F8A",
+        borderCurve: "10%",
+        borderBottomColor: "#ddd",
     },
     itemText: {
         fontSize: 18,
