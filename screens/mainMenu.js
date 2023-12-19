@@ -324,6 +324,20 @@ const mainMenu = () => {
         );
     };       
 
+    return (
+        <NativeBaseProvider>
+            <View style={styles.container}>
+                <FlatList
+                    data={checklist}
+                    keyExtractor={(item) => item.bab}
+                    renderItem={renderItem}
+                    ItemSeparatorComponent={() => <View style={styles.separator} />}
+                />
+            </View>
+        </NativeBaseProvider>
+    );
+};
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
