@@ -1,4 +1,4 @@
-// import { Button } from "native-base";
+import { Button } from "native-base";
 import React, { Component, useState } from "react";
 import {
     Text,
@@ -154,43 +154,137 @@ const checklist = [
         "bab": "8",
         "judul": "CLIMB-OUT",
         "isi": [
+            {"command": "CMD A or B", "status": "ENGANGE (when suitable)"},
+            
+            //Passing TA (Transition-Altitude)
 
+            {"commnad": "ALTIMETER", "status": "PUSH TO SET STD (29,92 / 1013)"},
+            {"command": "BELOW 10'000FT", "status": "MAX. 250 KIAS"},
+            {"command": "ATC", "status": "AS REQUIRED"},
+
+            //Passing 10'000 ft
+
+            {"command": "LANDING LIGHT", "status": "OFF"},
+            {"command": "FASTEN SEAT BELTS", "status": "OFF"},
+            {"command": "C FUEL PUMPS", "status": "OFF"}
         ]
     },
     {
         "bab": "9",
         "judul": "CRUISE & DESCENT",
         "isi": [
+            {"command": "ENGINE & INSTRUMENTS", "status": "MONITOR"},
+            {"command": "FUEL QUANTITY", "status": "CHECK"},
+            {"command": "LIGHTS", "status": "AS REQUIRED"},
 
+            //Before TOD
+            {"command": "ATIS / AIRPORT INFORMATION", "status": "CHECK"},
+            {"command": "ALTIMETER", "status": "CHECK"},
+            {"command": "RADIOS", "status": "SET"},
+            {"command": "RESET MCP ALTITUDE", "status": "CHECK"},
+            {"command": "FMC APPR SPEED REF", "status": "SET"},
+            {"command": "LOCALIZER FREQ", "status": "SET"},
+            {"command": "ILS LOC COURSE", "status": "SET"},
+
+            //Descent
+            {"command": "DE-ICE", "status": "AS REQUIRED"},
+            {"command": "LANDING ALT", "status": "CHECK"},
+            {"command": "RECALL (737-800 only)", "status": "CHECK"},
+            {"command": "RADIO ALT / BARO MIN", "status": "SET, CHECK"},
+            {"command": "AUTO BRAKE", "status": "AS REQUIRED"},
+
+            //Passing TA (Transition-Altitude)
+            {"command": "ALTIMETER", "status": "RESET TO LOCAL"},
+
+            //Below 10'000 ft
+            {"command": "SPEED", "status": "250 KIAS"},
+            {"command": "LANDING LIGHTS", "status": "ON"},
+            {"command": "PASSENGER SIGNS", "status": "ON"},
+
+            //Check Weather (ATIS, Flight Services)
         ]
     },
     {
         "bab": "10",
         "judul": "APPROACH",
         "isi": [
-
+            {"command": "ALTIMETER", "status": "CHECK"},
+            {"command": "LOCALIZER FREQ", "status": "CHECK"},
+            {"command": "LOCALIZER COURSE", "status": "CHECK"},
+            {"command": "APP", "status": "ARM"},
+            {"command": "GLIDESLOPE ALIVE", "status": "GEAR DOWN"},
+            {"command": "FLAPS", "status": "15"},
+            {"command": "SPEED BRAKE", "status": "ARM"},
+            {"command": "2ND AUTOPILOT", "status": "ARM (when ILS established)"},
+            {"command": "ENGINE START SWITCHES", "status": "CONT"},
+            {"command": "LANDING FLAPS", "status": "SET"},
         ]
     },
     {
         "bab": "11",
         "judul": "LANDING",
-        "isi": [{
-            "command": "engine brake",
-            "status": "aktif"
-        }]
+        "isi": [
+            {"command": "GO AROUND ALTITUDE", "status": "SET"},
+            {"command": "RWY TURN-OFF LIGHTS", "status": "ON"},
+            {"command": "LANDING GEAR", "status": "CHECK DOWN"},
+            {"command": "AUTOPILOT", "status": "AS REQUIRED"},
+            {"command": "AUTO-THRUST", "status": "AS REQUIRED"},
+
+            //After Touch-Down
+            {"command": "THRUST REVERSE", "status": "ENGAGE"},
+            {"command": "AUTOPILOT", "status": "OFF"},
+            {"command": "AUTOTHRUST", "status": "OFF"},
+            {"command": "AT 60 KTS", "status": "REV THRUST TO IDLE"},
+            {"command": "AT 60 KTS", "status": "AUTO-BRAKE DISENGAGE"},
+        ]
     },
     {
         "bab": "12",
         "judul": "AFTER LANDING",
         "isi": [
+            {"command": "TRANSPONDER", "status": "OFF"},
+            {"command": "FLAPS", "status": "RETRACT"},
+            {"command": "SPEED BRAKE", "status": "DOWN"},
+            {"command": "LANDING LIGHTS", "status": "OFF"},
+            {"command": "STROBE LIGHTS", "status": "OFF"},
+            {"command": "TAXI LIGHTS", "status": "ON"},
+            {"command": "CABIN LIGHTS", "status": "AS REQUIRED"},
+            {"command": "ANTI ICE", "status": "AS REQUIRED"},
+            {"command": "APU", "status": "START / CHECK RUN"},
+            {"command": "PROBE HEAT", "status": "OFF"},
+            {"command": "ENG START SWITCHES", "status": "OFF"},
+            {"command": "AUTO-BRAKE", "status": "OFF"},
 
+            //Taxi to Assigned Gate/Parking (Speed Max 20 knots)
+
+            {"command": "RWY TURNOFF LIGHTS", "status": "OFF"},
+            {"command": "APU GEN", "status": "ON / CHECK VOLTS"},
+
+            //Turning Into The Gate:
+
+            {"command": "TAXI LIGHTS", "status": "OFF"},
         ]
     },
     {
         "bab": "13",
         "judul": "PARKING / SHUTDOWN",
         "isi": [
-
+            {"command": "PARKING BRAKES", "status": "SET"},
+            {"command": "ENGINE FUEL CONTROL LEVERS", "status": "OFF"},
+            {"command": "GROUND CONTACT", "status": "ESTABLISH"},
+            {"command": "GROUND OPERATIONS", "status": "AS REQUIRED (FMC)"},
+            {"command": "PASSENGER SIGNS", "status": "OFF"},
+            {"command": "APU BLEED AIR", "status": "ON"},
+            {"command": "ANIT COLL LIGHTS", "status": "OFF"},
+            {"command": "FUELPUMPS", "status": "OFF"},
+            {"command": "L AFT FUEL PUMP", "status": "ON"},
+            {"command": "ANTI-ICE", "status": "OFF"},
+            {"command": "ELED HYD PUMPS", "status": "OFF"},
+            {"command": "ISOLATION VALVE", "status": "OPEN"},
+            {"command": "FLIGHT DIRECTOR", "status": "OFF"},
+            {"command": "ELECTRICAL POWER", "status": "ESTABLISH"},
+            {"command": "EXTERIOR LIGHTS", "status": "AS REQUIRED"},
+            {"command": "DOORS", "status": "OPEN"},
         ]
     },
 ]
