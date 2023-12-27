@@ -11,10 +11,8 @@ import {
     SafeAreaView,
 
 } from "react-native";
-import { NativeBaseProvider, } from "native-base";
-import { CheckBox } from 'react-native-elements';
-import { useNavigation } from "@react-navigation/native"; // Impor useNavigation
 import { NativeBaseProvider } from "native-base";
+import { useNavigation } from "@react-navigation/native";
 // cheklist berisi semua data datanya ditaroh disini. atau kalo mau misahin silakan
 const checklist = [
     {
@@ -292,79 +290,60 @@ const checklist = [
     },
 ]
 
-const mainMenu = () => {
-    const navigation = useNavigation();
-    const [checkedItems, setCheckedItems] = useState({});
+const MainMenu = ({ route }) => {
+  const navigation = useNavigation();
 
-    const handleCheckBox = (item) => {
-        setCheckedItems((prevCheckedItems) => ({
-            ...prevCheckedItems,
-            [item.command]: !prevCheckedItems[item.command],
-        }));
-    };
-
-    const renderItem = ({ item }) => {
-        return (
-            <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('Detail', { selectedItem: item })}>
-                <View style={{ flexDirection: "row", alignItems: "flex-start" }}>
-                    <View style={styles.CheckBox}>
-                        <TouchableOpacity onPress={() => handleCheckBox(item)}>
-                            <CheckBox
-                                isChecked={checkedItems[item.command]}
-                                onPress={() => handleCheckBox(item)}
-                                colorScheme="primary"
-                            />
-                        </TouchableOpacity>
-                        <View style={{ flexDirection: "column", alignItems: "flex-start", paddingVertical: 10 }}>
-                            <Text style={styles.itemText}>{item.command}: {item.judul}</Text>
-                        </View>
-                    </View>
-                </View>
-            </TouchableOpacity>
-        );
-    };       
-
+  const renderItem = ({ item }) => {
     return (
-        <NativeBaseProvider>
-            <View style={styles.container}>
-                <FlatList
-                    data={checklist}
-                    keyExtractor={(item) => item.bab}
-                    renderItem={renderItem}
-                    ItemSeparatorComponent={() => <View style={styles.separator} />}
-                />
-            </View>
-        </NativeBaseProvider>
+      <TouchableOpacity
+        style={styles.item}
+        onPress={() => {
+          navigation.navigate("detail", { details: item.isi });
+        }}
+      >
+        <View style={{ flexDirection: "row", alignItems: "flex-start" }}>
+          <View style={{ flexDirection: "column", alignItems: "flex-start", paddingVertical: 10 }}>
+            <Text style={styles.itemText}>{item.judul}</Text>
+          </View>
+        </View>
+      </TouchableOpacity>
     );
+  };
+
+  return (
+    <NativeBaseProvider>
+      <View style={styles.container}>
+        <FlatList
+          data={checklist}
+          keyExtractor={(item) => item.bab}
+          renderItem={renderItem}
+          ItemSeparatorComponent={() => <View style={styles.separator} />}
+        />
+      </View>
+    </NativeBaseProvider>
+  );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 16,
-    },
-    item: {
-        padding: 16,
-        backgroundColor: "white",
-        borderColor: "#34495E",
-        borderWidth: 2,
-        borderRadius: 10,
-        borderBottomWidth: 1,
-        backgroundColor: "#193F8A",
-        borderCurve: "10%",
-        borderBottomColor: "#ddd",
-    },
-    itemText: {
-        fontSize: 18,
-        fontWeight: "bold",
-        color: "black",
-    },
-    separator: {
-        height: 18,
-    },
-    CheckBox: {
-        // Add any additional styles for CheckBox container if needed
-    },
+  container: {
+    flex: 1,
+    padding: 16,
+  },
+  item: {
+    padding: 16,
+    backgroundColor: "white",
+    borderColor: "#34495E",
+    borderWidth: 2,
+    borderRadius: 10,
+  },
+  itemText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "black",
+  },
+  separator: {
+    height: 18,
+  },
 });
 
-export default mainMenu;
+export default MainMenu;
