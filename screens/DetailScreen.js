@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ScrollView, View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { FontAwesome } from "@expo/vector-icons"; // Assuming FontAwesome is available
+import { useFocusEffect } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const DetailScreen = ({ route }) => {
   const { details } = route.params;
   const [checkedItems, setCheckedItems] = useState([]);
   const [checkedCount, setCheckedCount] = useState(0);
+  const babKey = route.params.babKey; // Menambahkan parameter babKey
 
   const handleToggleCheckbox = (index) => {
     const updatedCheckedItems = [...checkedItems];
@@ -30,6 +33,48 @@ const DetailScreen = ({ route }) => {
     setCheckedCount(0);
   };
 
+  // Load checked items from AsyncStorage on component mount
+  useEffect(() => {
+    const loadCheckedItems = async () => {
+      try {
+        const storedCheckedItems = await AsyncStorage.getItem(`checkedItems_${babKey}`);
+        if (storedCheckedItems) {
+          setCheckedItems(JSON.parse(storedCheckedItems));
+        }
+      } catch (error) {
+        console.error("Error loading checked items from AsyncStorage:", error);
+      }
+    };
+
+    loadCheckedItems();
+  }, [babKey]);
+
+  useEffect(() => {
+    // Save checked items to AsyncStorage whenever it changes
+    const saveCheckedItems = async () => {
+      try {
+        await AsyncStorage.setItem(`checkedItems_${babKey}`, JSON.stringify(checkedItems));
+      } catch (error) {
+        console.error("Error saving checked items to AsyncStorage:", error);
+      }
+    };
+
+    saveCheckedItems();
+    // Also update checked count whenever checked items change
+    setCheckedCount(checkedItems.length);
+  }, [checkedItems, babKey]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      // Setel kembali status centang dan hitung tercentang
+      // dengan menggunakan nilai yang disimpan sebelumnya
+      setCheckedItems((prevCheckedItems) => {
+        setCheckedCount(prevCheckedItems.length);
+        return [...prevCheckedItems]; // Perbarui agar referensi array berbeda
+      });
+    }, [])
+  );
+
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.checkedCountText}>{`${checkedCount} item(s) checked`}</Text>
@@ -50,7 +95,7 @@ const DetailScreen = ({ route }) => {
       ))}
       {checkedCount > 0 && (
         <TouchableOpacity onPress={handleUndoChecklist}>
-          <Text style={styles.undoText}>Undo Checklist</Text>
+          <Text style={styles.undoText}>Reset Checklist</Text>
         </TouchableOpacity>
       )}
     </ScrollView>
@@ -98,6 +143,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "blue",
     textDecorationLine: "underline",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 30,
   },
 });
 
