@@ -298,7 +298,7 @@ const MainMenu = ({ route }) => {
       <TouchableOpacity
         style={styles.item}
         onPress={() => {
-          navigation.navigate("detail", { details: item.isi });
+          navigation.navigate("detail", { details: item.isi, babKey: item.judul }); // Menambahkan babKey
         }}
       >
         <View style={{ flexDirection: "row", alignItems: "flex-start" }}>
